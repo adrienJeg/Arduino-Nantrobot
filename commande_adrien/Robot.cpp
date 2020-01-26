@@ -24,7 +24,7 @@ Robot::Robot() : leftMotor(PIN_MOTOR_L_DIR, PIN_MOTOR_L_PWM, leftMotorDirReferen
   minDist = 0.02;
   vR = 0.0;
   vL = 0.0;
-  v = 0.0;
+  v = 1.0;
   omega = 0.0;
   angleError = 0.0;
   sumError = 0.0;
@@ -102,6 +102,16 @@ void Robot::navigate()
 }
 
 
+void Robot::drive() {
+  int pwmMotorL = vL * 5.5;
+  int pwmMotorR = vR * 5.5;
 
+  // Constrain the values of the PWM
+  pwmMotorL = constrain(pwmMotorL, -70, 70);
+  pwmMotorR = constrain(pwmMotorR, -70, 70);
 
+  // Send the PWM to the motors
+  leftMotor.setMotor(pwmMotorL);
+  rightMotor.setMotor(pwmMotorR);
+}
 
