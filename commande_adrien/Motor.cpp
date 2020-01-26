@@ -2,11 +2,13 @@
   Motor.cpp - Library for controlling a motor.
   Created by Adrien Jégourel, January 25, 2020.
 */
-#pragma once
-
 #include "Motor.h"
 
-Motor::Motor(const int PIN_DIR, const int PIN_PWM, signed int dirReference)
+void myISR(){
+  
+}
+
+Motor::Motor(int PIN_DIR, int PIN_PWM, signed int dirReference)
 {
   // Attributes initialization
   this->PIN_DIR = PIN_DIR;
