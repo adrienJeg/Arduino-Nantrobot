@@ -25,11 +25,9 @@ Pose::Pose(const Pose& p) {
 }
 
 float Pose::distance(Pose p) {
-  return sqrt((this->getX() - p.getX())*(this->getX() - p.getX()) + 
-          (this->getY() - p.getY())*(this->getY() - p.getY()));
+  return sqrt((x - p.getX())*(x - p.getX()) + (y - p.getY())*(y - p.getY()));
 }
 
 float Pose::distance(float x, float y) {
-  return sqrt((this->getX() - x)*(this->getX() - x) + 
-          (this->getY() - y)*(this->getY() - y));
+  return sqrt((this->x - x)*(this->x - x) + (this->y - y)*(this->y - y));
 }
