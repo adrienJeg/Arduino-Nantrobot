@@ -7,18 +7,16 @@
 class Waypoint
 {
   private:
-    Pose currentPose;
-    int currentIndex;
     Vector<Pose> listWaypoints;
 
   public:
     Waypoint();
     Waypoint(Vector<Pose> listWaypoints);
-    // Waypoint(float[] listX, float[] listY);
+    Waypoint(float* listX, float* listY);
     void next();
     void add(Pose p);
+    Pose getCurrent();
 
-    Pose getCurrentPose() {return this->currentPose;};
     Vector<Pose> getListWaypoints() {return this->listWaypoints;};
 
 };
