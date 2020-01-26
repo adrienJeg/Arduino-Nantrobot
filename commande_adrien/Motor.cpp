@@ -24,9 +24,9 @@ Motor::Motor(const int PIN_DIR, const int PIN_PWM, signed int dirReference)
     digitalWrite(PIN_DIR, HIGH);
 }
 
-void Motor::setMotor()
+void Motor::setMotor(int newPWM)
 {
-  PWM = constrain(PWM, -250, 250); // to make sure we don't overflow
+  PWM = constrain(newPWM, -250, 250); // to make sure we don't overflow
   PWM = PWM * dirReference; // Different between left and right motor
   if (PWM > 0) 
   {
