@@ -32,6 +32,52 @@ Robot::Robot() : leftMotor(PIN_MOTOR_L_DIR, PIN_MOTOR_L_PWM, leftMotorDirReferen
   commandDelta = 0.0;
 }
 
+void Robot::updatePoseEncoders()
+/* 
+ *  Compute new robot pose using encoders odometry
+ */
+{
+  // Gives the linear distance achieved by turning the wheel of une encoder pulse.
+  // Our motor (pololu 3216) has a 34:1 gearbox, and the encoder gives 48 pulses per motor shaft turn
+  float distCoeff = 2.0*PI*wheelRadius / (34.0 * 48.0);  
+
+  static signed long oldLeftPulseCount = 0, oldRightPulseCount = 0;
+  
+  // Compute the linear distance of each wheel achieved since last loop iteration 
+  float leftDist = distCoeff*(leftEncoder.getPulseCount() - oldLeftPulseCount);
+  float rightDist = distCoeff*(rightEncoder.getPulseCount() - oldRightPulseCount);
+
+  // Save the pulse values for next iteration
+  oldLeftPulseCount = leftEncoder.getPulseCount();
+  oldRightPulseCount = rightEncoder.getPulseCount();
+  
+  // Compute delta distance and angles
+  float dDist = (rightDist + leftDist) / 2.0;
+  float dAngl = (rightDist - leftDist) / L;
+  
+  // Compute new robot pose
+  poseEncoders.setX(poseEncoders.getX() + dDist*cos(poseEncoders.getTheta() + dAngl / 2.0));
+  poseEncoders.setY(poseEncoders.getY() + dDist*sin(poseEncoders.getTheta() + dAngl / 2.0));
+  poseEncoders.setTheta(poseEncoders.getTheta() + dAngl);
+  
+}
+
+
+void Robot::sensorFusion()
+{
+  pose = Pose(poseEncoders);
+}
+
+
+void Robot::navigate()
+{
+  float targetDistance = pose.distance(waypoints.getCurrent());
+  Serial.println(targetDistance);
+  if (targetDistance < minDist)
+  {
+    waypoints.next();
+  }
+}
 
 void Robot::computePIDOutput(float sampleTime) {
   float thetaDesired = atan2(waypoints.getCurrent().getY() - pose.getY(),
@@ -55,50 +101,6 @@ void Robot::updateVelocities()
 {
   vR = (2*v + omega * L) / (2.0 * wheelRadius);
   vL = (2*v - omega * L) / (2.0 * wheelRadius);
-}
-
-void Robot::updatePoseEncoders()
-/* 
- *  Compute new robot pose using encoders odometry
- */
-{
-  // Gives the linear distance achieved by turning the wheel of une encoder pulse.
-  // Our motor (pololu 3216) has a 34:1 gearbox, and the encoder gives 48 pulses per motor shaft turn
-  float distCoeff = 2.0*PI*wheelRadius / (34.0 * 48.0);  
-
-  static unsigned long oldLeftPulseCount = 0, oldRightPulseCount = 0;
-  
-  // Compute the linear distance of each wheel achieved since last loop iteration 
-  float leftDist = distCoeff*(leftEncoder.getPulseCount() - oldLeftPulseCount);
-  float rightDist = distCoeff*(rightEncoder.getPulseCount() - oldRightPulseCount);
-
-  // Save the pulse values for next iteration
-  oldLeftPulseCount = leftEncoder.getPulseCount();
-  oldRightPulseCount = rightEncoder.getPulseCount();
-  
-  // Compute delta distance and angles
-  float dDist = (rightDist + leftDist) / 2.0;
-  float dAngl = (rightDist - leftDist) / wheelRadius;
-  
-  // Compute new robot pose
-  poseEncoders.setX(poseEncoders.getX() + dDist*cos(poseEncoders.getTheta() + dAngl / 2.0));
-  poseEncoders.setY(poseEncoders.getY() + dDist*sin(poseEncoders.getTheta() + dAngl / 2.0));
-  poseEncoders.setTheta(poseEncoders.getTheta() + dAngl);
-  
-}
-
-void Robot::sensorFusion()
-{
-  pose = Pose(poseEncoders);
-}
-
-void Robot::navigate()
-{
-  float targetDistance = pose.distance(waypoints.getCurrent());
-  if (targetDistance < minDist)
-  {
-    waypoints.next();
-  }
 }
 
 

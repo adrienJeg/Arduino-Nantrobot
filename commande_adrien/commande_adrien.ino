@@ -15,16 +15,16 @@ long currentTime, previousTime;  // in microseconds
 float sampleTime = 0.02; // period of the main loop, in seconds (here, frequency of 100 Hz)
 
 // Robot instance
-Robot r = Robot();
+Robot rob = Robot();
 
 void setup()
 {
 
   
-  // r.getWaypoints().setListWaypoints(waypointsX, waypointsY, nWaypoints);
-  // r.Kp = 50.0;  // Should probably be passed to the constructor
-  // r.Ki = 20.0;
-  // r.Kd = 5.0;
+  rob.getWaypoints().setListWaypoints(waypointsX, waypointsY, nWaypoints);
+  rob.Kp = 50.0;  // Should probably be passed to the constructor
+  rob.Ki = 20.0;
+  rob.Kd = 5.0;
 
   // Initialization of some things
   Serial.begin(115200);
@@ -35,7 +35,17 @@ void setup()
 void loop()
 {
   previousTime = currentTime;
-  Serial.println(r.getRightEncoder().getPulseCount());
+  rob.updatePoseEncoders();
+  rob.sensorFusion();
+  rob.navigate();
+  rob.computePIDOutput(sampleTime);
+  rob.updateVelocities();
+  rob.drive();
+  rob.getWaypoints().next();
+  Serial.print("xc ");
+  Serial.print(rob.getWaypoints().getCurrent().getX());
+  Serial.print("\t yc ");
+  Serial.println(rob.getWaypoints().getCurrent().getY());
 
 
   // --- Wait for next iteration ---
