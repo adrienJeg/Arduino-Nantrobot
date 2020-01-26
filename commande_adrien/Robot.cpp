@@ -1,6 +1,7 @@
 #include "Robot.h"
 
-Robot::Robot() {
+Robot::Robot() : leftMotor(8, 10, -1), rightMotor(7, 9, 1)
+{
   wheelRadius = 0.04;
   L = 0.23;
   minDist = 0.02;
