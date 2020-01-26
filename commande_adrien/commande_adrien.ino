@@ -18,11 +18,11 @@ float sampleTime = 0.02; // period of the main loop, in seconds (here, frequency
 void setup()
 {
   // Robot instance
-  Robot r = Robot();
-  r.getWaypoints().setListWaypoints(waypointsX, waypointsY, nWaypoints);
-  r.Kp = 50.0;  // Should probably be passed to the constructor
-  r.Ki = 20.0;
-  r.Kd = 5.0;
+  // Robot r = Robot();
+  // r.getWaypoints().setListWaypoints(waypointsX, waypointsY, nWaypoints);
+  // r.Kp = 50.0;  // Should probably be passed to the constructor
+  // r.Ki = 20.0;
+  // r.Kd = 5.0;
 
   // Initialization of some things
   Serial.begin(115200);

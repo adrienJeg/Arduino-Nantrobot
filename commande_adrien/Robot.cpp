@@ -40,7 +40,7 @@ void Robot::computePIDOutput(float sampleTime) {
   thetaDesired = atan2(sin(thetaDesired), cos(thetaDesired));
 
   // Angle error
-  float newAngleError = thetaDesired - pose.getTheta;
+  float newAngleError = thetaDesired - pose.getTheta();
   float deltaError = newAngleError - angleError;
   angleError = newAngleError;
 
@@ -88,4 +88,3 @@ void Robot::newPoseRobot()
   poseEncoders.setTheta(poseEncoders.getTheta() + dAngl);
   
 }
-
