@@ -24,15 +24,23 @@ class Robot
     float v;
     float omega;
     float targetDistance;
+    float angleError;
+    float sumError;
+    float deltaError;
+    float commandDelta;
 
   public:
     // Attributes
     float wheelRadius;  // in meters
     float L;  // distance between the two wheels in meters
     float minDist;  // min distance (in meters) to consider that the robot reached a waypoint
+    float Kp;  // P coefficient for the PID
+    float Ki;  // I coefficient for the PID
+    float Kd;  // D coefficient for the PID
 
     // Methods
     Robot();
+    void computePIDOutput(float sampleTime);
     void updateVelocities(); // Compute wheels linear velocities
     void updatePoseEncoders(); // Compute the new pose of the robot using only encoders
     void sensorFusion(); // Performs data fusion to estimate the robot pose using sensors information, currently not implemented

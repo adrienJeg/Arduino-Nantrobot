@@ -27,8 +27,30 @@ Robot::Robot() : leftMotor(PIN_MOTOR_L_DIR, PIN_MOTOR_L_PWM, leftMotorDirReferen
   v = 0.0;
   omega = 0.0;
   targetDistance = 0.0;
-  
+  angleError = 0.0;
+  sumError = 0.0;
+  deltaError = 0.0;
+  commandDelta = 0.0;
 }
+
+
+void Robot::computePIDOutput(float sampleTime) {
+  float thetaDesired = atan2(waypoints.getCurrent().getY() - pose.getY(),
+                        waypoints.getCurrent().getX() - pose.getX());
+  thetaDesired = atan2(sin(thetaDesired), cos(thetaDesired));
+
+  // Angle error
+  float newAngleError = thetaDesired - pose.getTheta();
+  float deltaError = newAngleError - angleError;
+  angleError = newAngleError;
+
+  // Integral term
+  sumError = sumError + angleError * sampleTime;
+
+  // PID output
+  omega = round(Kp * angleError + Kd * deltaError + Ki * sumError);
+}
+
 
 void Robot::updateVelocities()
 {
@@ -66,7 +88,6 @@ void Robot::updatePoseEncoders()
   
 }
 
-
 void Robot::sensorFusion()
 {
   pose = Pose(poseEncoders);
@@ -85,3 +106,5 @@ void Robot::sensorFusion()
 
 
 
+=======
+>>>>>>> 27822332f8b7167b67665b95a9255987d045afa6
