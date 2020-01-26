@@ -2,21 +2,24 @@
 
 #include "Arduino.h"
 #include "Pose.h"
-#include "Vector.h"
+#include "Queue.h"
 
 class Waypoint
 {
   private:
-    Vector<Pose> listWaypoints;
+    const int DEFAULT_MAX_ITEMS = 20;
+    DataQueue<Pose> listWaypoints;
 
   public:
     Waypoint();
-    Waypoint(Vector<Pose> listWaypoints);
+    Waypoint(DataQueue<Pose> listWaypoints);
+    Waypoint(Pose listPose[], int arraySize);
     Waypoint(float listX[], float listY[], int arraySize);
-    void next();
-    void add(Pose p);
-    Pose getCurrent();
+    void next();  // Sets the current waypoint to the next one in the queue
+    void add(Pose p);  // Add a new waypoint at the end of the queue
+    Pose getCurrent();  // Returns the current waypoint
+    bool isEmpty();  // Indicates whether the queue is empty or not
 
-    Vector<Pose> getListWaypoints() {return this->listWaypoints;};
+    DataQueue<Pose> getListWaypoints() {return this->listWaypoints;};
 
 };

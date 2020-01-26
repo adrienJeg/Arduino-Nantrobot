@@ -12,13 +12,12 @@ class Motor
     int PIN_DIR;
     int PIN_PWM;
     int PWM;
-    signed int dirReference;
+    signed int dirReference;  // 1 if the motor goes forward with a positive PWM, -1 if not
     
   public:
     Motor(int PIN_DIR, int PIN_PWM, signed int dirReference); // Constructor
-    void setMotor();
+    void setMotor(int newPWM);
 
     // Getters and Setters
     int getPWM(){return PWM;};
-    void setPWM(int newPWM){PWM = newPWM;};
 };
