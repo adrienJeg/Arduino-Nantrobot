@@ -45,6 +45,7 @@ class Robot
     void updatePoseEncoders(); // Compute the new pose of the robot using only encoders
     void sensorFusion(); // Performs data fusion to estimate the robot pose using sensors information, currently not implemented
     void navigate(); // Check when to change to the next waypoint
+    void drive();  // Compute and sends the PWM to the motors 
 
     // Getters and setters
     Waypoint getWaypoints() {return this->waypoints;}

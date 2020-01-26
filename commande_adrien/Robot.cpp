@@ -92,3 +92,16 @@ void Robot::sensorFusion()
 {
   pose = Pose(poseEncoders);
 }
+
+void Robot::drive() {
+  int pwmMotorL = vL * 5.5;
+  int pwmMotorR = vR * 5.5;
+
+  // Constrain the values of the PWM
+  pwmMotorL = constrain(pwmMotorL, -70, 70);
+  pwmMotorR = constrain(pwmMotorR, -70, 70);
+
+  // Send the PWM to the motors
+  leftMotor.setMotor(pwmMotorL);
+  rightMotor.setMotor(pwmMotorR);
+}
