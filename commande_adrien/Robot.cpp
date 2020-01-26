@@ -24,7 +24,7 @@ Robot::Robot() : leftMotor(PIN_MOTOR_L_DIR, PIN_MOTOR_L_PWM, leftMotorDirReferen
   minDist = 0.02;
   vR = 0.0;
   vL = 0.0;
-  v = 0.0;
+  v = 1.0;
   omega = 0.0;
   targetDistance = 0.0;
   angleError = 0.0;
