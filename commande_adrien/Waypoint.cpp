@@ -51,3 +51,10 @@ void Waypoint::add(Pose p) {
 bool Waypoint::isEmpty() {
   return listWaypoints.isEmpty();
 }
+
+void Waypoint::setListWaypoints(float listX[], float listY[], int arraySize) {
+  listWaypoints = DataQueue<Pose>(max(DEFAULT_MAX_ITEMS, arraySize));
+  for ( int i = 0 ; i < arraySize ; ++i ) {
+    listWaypoints.enqueue(Pose(listX[i], listY[i]));
+  }
+}

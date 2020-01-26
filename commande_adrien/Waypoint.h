@@ -10,6 +10,7 @@ class Waypoint
     const int DEFAULT_MAX_ITEMS = 20;
     DataQueue<Pose> listWaypoints;
 
+
   public:
     Waypoint();
     Waypoint(DataQueue<Pose> listWaypoints);
@@ -21,5 +22,6 @@ class Waypoint
     bool isEmpty();  // Indicates whether the queue is empty or not
 
     DataQueue<Pose> getListWaypoints() {return this->listWaypoints;};
+    void setListWaypoints(float listX[], float listY[], int arraySize);
 
 };
