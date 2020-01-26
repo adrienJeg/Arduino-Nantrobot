@@ -13,6 +13,7 @@ class Motor
     int PIN_PWM;
     int PWM;
     signed int dirReference;
+    
   public:
     Motor(int PIN_DIR, int PIN_PWM, signed int dirReference); // Constructor
     void setMotor();
