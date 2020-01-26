@@ -26,7 +26,6 @@ Robot::Robot() : leftMotor(PIN_MOTOR_L_DIR, PIN_MOTOR_L_PWM, leftMotorDirReferen
   vL = 0.0;
   v = 0.0;
   omega = 0.0;
-  targetDistance = 0.0;
   angleError = 0.0;
   sumError = 0.0;
   deltaError = 0.0;
@@ -92,3 +91,17 @@ void Robot::sensorFusion()
 {
   pose = Pose(poseEncoders);
 }
+
+void Robot::navigate()
+{
+  float targetDistance = pose.distance(waypoints.getCurrent());
+  if (targetDistance < minDist)
+  {
+    waypoints.next();
+  }
+}
+
+
+
+
+

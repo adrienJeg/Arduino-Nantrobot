@@ -14,11 +14,13 @@ float waypointsY[] = {0.0, 0.5, 0.5, 0.0, 0.0}; // en m
 long currentTime, previousTime;  // in microseconds
 float sampleTime = 0.02; // period of the main loop, in seconds (here, frequency of 100 Hz)
 
+// Robot instance
+Robot r = Robot();
 
 void setup()
 {
-  // Robot instance
-  // Robot r = Robot();
+
+  
   // r.getWaypoints().setListWaypoints(waypointsX, waypointsY, nWaypoints);
   // r.Kp = 50.0;  // Should probably be passed to the constructor
   // r.Ki = 20.0;
@@ -33,7 +35,7 @@ void setup()
 void loop()
 {
   previousTime = currentTime;
-
+  Serial.println(r.getRightEncoder().getPulseCount());
 
 
   // --- Wait for next iteration ---

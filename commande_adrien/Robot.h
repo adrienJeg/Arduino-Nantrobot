@@ -23,7 +23,6 @@ class Robot
     float vL;
     float v;
     float omega;
-    float targetDistance;
     float angleError;
     float sumError;
     float deltaError;
@@ -67,8 +66,6 @@ class Robot
     
     float getOmega() {return this->omega;}
     void setOmega(float omega) {this->omega = omega;}
-    
-    float getTargetDistance() {return this->targetDistance;}
-    void setTargetDistance(float targetDistance) {this->targetDistance = targetDistance;}
+
 
 };
