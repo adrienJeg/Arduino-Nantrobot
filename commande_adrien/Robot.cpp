@@ -92,19 +92,3 @@ void Robot::sensorFusion()
 {
   pose = Pose(poseEncoders);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-=======
->>>>>>> 27822332f8b7167b67665b95a9255987d045afa6
