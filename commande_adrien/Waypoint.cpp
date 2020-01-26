@@ -7,8 +7,10 @@ Waypoint::Waypoint(Vector<Pose> listWaypoints) {
   this->listWaypoints = listWaypoints;
 }
 
-Waypoint::Waypoint(float* listX, float* listY) {
-  
+Waypoint::Waypoint(float listX[], float listY[], int arraySize) {
+  for ( int i = 0 ; i < arraySize ; ++i ) {
+    listWaypoints.push_back(Pose(listX[i], listY[i]));
+  }
 }
 
 Pose Waypoint::getCurrent() {

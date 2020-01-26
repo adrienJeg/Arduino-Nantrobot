@@ -12,7 +12,7 @@ class Waypoint
   public:
     Waypoint();
     Waypoint(Vector<Pose> listWaypoints);
-    Waypoint(float* listX, float* listY);
+    Waypoint(float listX[], float listY[], int arraySize);
     void next();
     void add(Pose p);
     Pose getCurrent();
