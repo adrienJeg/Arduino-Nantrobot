@@ -72,11 +72,6 @@ const float coeffLong = 2.0*PI*rRoue/1632.0; // Coeficient pour détermination d
 float dDist = 0.; // Variation de position en distance
 float dAngl = 0.; // Variation de position en angle
 
-// --- Communication ---
-String tmp = ""; // Message reçu
-char param; 
-char key; // Distinction des cas 
-int indice = 1; // Indice de lecture du message
 
 // --- Asservissement ---
 // Coefficients du PD 
@@ -102,14 +97,6 @@ bool aTermine = false;
 // --- Affichage ---
 bool printValue = false;
 int cptAffichage = 0;
-
-//// --- ROS ---
-//ros::NodeHandle nh;
-//
-//std_msgs::String str_msg;
-//ros::Publisher debugNode("debugNode", &str_msg);
-
-
 
 
 float v0 = 1.0; // en m/s non pas du tout
@@ -232,10 +219,8 @@ void loop()
   if(distanceCible <= distanceMini)
   {
     indicePosCourante++;
-    //indicePosCourante = indicePosCourante % 4; // On parcourt les 4 mêmes positions
     
     
-    //Serial.print("Youpi !");
     if (indicePosCourante == 5) // on a fait un tour complet
     {
       aTermine = true;
@@ -249,18 +234,6 @@ void loop()
   consigneOrientation = atan2(yC-yR, xC-xR); // - orientationR
   consigneOrientation = atan2(sin(consigneOrientation), cos(consigneOrientation));
 
-  Serial.print("\t consOri ");
-  Serial.print(consigneOrientation);
-  Serial.print("\t xC ");
-  Serial.print(xC);
-  Serial.print("\t yC ");
-  Serial.print(yC);
-  Serial.print("\t xR ");
-  Serial.print(xR);
-  Serial.print("\t yR ");
-  Serial.print(yR);
-  Serial.print("\t theta ");
-  Serial.print(orientationR);
 
 
 // --- Asservissement ---
@@ -280,34 +253,17 @@ void loop()
 	// Calcul du PID
   omega = round(coeffP * erreurAngle + coeffD * deltaErreur + coeffI * sommeErreur);
 
-  //deltaCommande = deltaCommande * distanceCible * 3.0; // On accorde plus de poids à l'orientation quand on est loin
-  Serial.print("\t omega ");
-  Serial.print(omega);
 
 // --- Commandes envoyées aux moteurs ---  
   updateVelocities(v0, omega);//  L_updatePWM = vl * 5.5;
-//  R_updatePWM = vr * 5.5;
-//
-//  // On bride l'accélération maximale pour ne pas que les roues patinent
-//  L_updatePWM = constrain(L_updatePWM, -20, 20); 
-//  R_updatePWM = constrain(R_updatePWM, -20, 20);
-//  
-//  pwmMotorL = pwmMotorL + L_updatePWM;
-//  pwmMotorR = pwmMotorR + R_updatePWM;
 
   pwmMotorL = vl * 5.5;
   pwmMotorR = vr * 5.5;
-  Serial.print("\t distC ");
-  Serial.print(distanceCible);
 
 	// Recadre une première fois les valeurs de PWM 
   pwmMotorL = constrain(pwmMotorL, -70, 70);
   pwmMotorR = constrain(pwmMotorR, -70, 70);
 
-  Serial.print("\t pwmL ");
-  Serial.print(pwmMotorL);
-  Serial.print("\t pwmR ");
-  Serial.println(pwmMotorR);
 
   // Envoi des commandes aux moteurs :
   if (!aTermine)
@@ -327,9 +283,6 @@ void loop()
     currentTime = micros(); // Temps absolu depuis le demarrage de la carte (en μs)
   } 
   while (currentTime - previousTime < (sampleTime * 1000000)) ;
-  
-  // On fait clignoter la led
-  digitalWrite(13, LOW);
 }
 
   
