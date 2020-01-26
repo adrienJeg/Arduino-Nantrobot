@@ -3,11 +3,11 @@
 class Sonar
 {
   private:
-    float obstaceDist;
+    float obstacleDist;
 
   public:
     Sonar();
 
-    float getObstaceDist() {return this->obstaceDist;}
-    void setObstaceDist(float obstaceDist) {this->obstaceDist = obstaceDist;}
+    float getObstacleDist() {return this->obstacleDist;}
+    void setObstacleDist(float obstacleDist) {this->obstacleDist = obstacleDist;}
 };

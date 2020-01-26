@@ -16,7 +16,7 @@ class Motor
     
   public:
     Motor(int PIN_DIR, int PIN_PWM, signed int dirReference); // Constructor
-    void setMotor(int newPWM);
+    void setMotor(int newPWM); // Send PWM to the motor driver
 
     // Getters and Setters
     int getPWM(){return PWM;};

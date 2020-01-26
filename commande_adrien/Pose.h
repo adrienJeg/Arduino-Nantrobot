@@ -17,7 +17,7 @@ class Pose
     Pose(float x, float y, float theta);
     Pose(const Pose& p);
     ~Pose(){};
-    float distance(Pose p);
+    float distance(const Pose &p);
     float distance(float x, float y);
 
     // Getters and setters

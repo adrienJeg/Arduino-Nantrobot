@@ -34,8 +34,7 @@ class Encoder
         if (Encoder::instances[1] != NULL)
             Encoder::instances[1]->encoderISR();
     }
-
-    
+ 
     
   public:
     // Constructor

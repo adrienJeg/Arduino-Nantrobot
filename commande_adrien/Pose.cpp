@@ -18,14 +18,14 @@ Pose::Pose(float x, float y, float theta) {
   this->theta = theta;
 }
 
-Pose::Pose(const Pose& p) {
+Pose::Pose(const Pose &p) {
   this->x = p.x;
   this->y = p.y;
   this->theta = p.theta;
 }
 
-float Pose::distance(Pose p) {
-  return sqrt((x - p.getX())*(x - p.getX()) + (y - p.getY())*(y - p.getY()));
+float Pose::distance(const Pose &p) {
+  return sqrt((x - p.x)*(x - p.x) + (y - p.y)*(y - p.y));
 }
 
 float Pose::distance(float x, float y) {
