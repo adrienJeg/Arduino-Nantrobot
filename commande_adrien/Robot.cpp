@@ -36,7 +36,7 @@ void Robot::updateVelocities()
   vL = (2*v - omega * L) / (2.0 * wheelRadius);
 }
 
-void Robot::newPoseRobot()
+void Robot::updatePoseEncoders()
 /* 
  *  Compute new robot pose using encoders odometry
  */
@@ -65,4 +65,23 @@ void Robot::newPoseRobot()
   poseEncoders.setTheta(poseEncoders.getTheta() + dAngl);
   
 }
+
+
+void Robot::sensorFusion()
+{
+  pose = Pose(poseEncoders);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 

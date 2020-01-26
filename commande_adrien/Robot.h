@@ -34,7 +34,9 @@ class Robot
     // Methods
     Robot();
     void updateVelocities(); // Compute wheels linear velocities
-    void newPoseRobot(); // Compute the new pose of the robot at each loop
+    void updatePoseEncoders(); // Compute the new pose of the robot using only encoders
+    void sensorFusion(); // Performs data fusion to estimate the robot pose using sensors information, currently not implemented
+    void navigate(); // Check when to change to the next waypoint
 
     // Getters and setters
     Waypoint getWaypoints() {return this->waypoints;}

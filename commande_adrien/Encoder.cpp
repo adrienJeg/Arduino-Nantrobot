@@ -4,6 +4,7 @@
 */
 #include "Encoder.h"
 
+Encoder *Encoder::instances[2] = {NULL, NULL};
 
 void Encoder::encoderISR()
 // Interruption Service Routine updating the pulse count
