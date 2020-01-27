@@ -16,12 +16,13 @@ float sampleTime = 0.02; // period of the main loop, in seconds (here, frequency
 
 // Robot instance
 Robot rob = Robot();
+int displayCounter;
+bool displayOn = true;
 
 void setup()
-{
-
+{ 
   
-  rob.getWaypoints().setListWaypoints(waypointsX, waypointsY, nWaypoints);
+  rob.waypoints.setListWaypoints(waypointsX, waypointsY, nWaypoints);
   rob.Kp = 50.0;  // Should probably be passed to the constructor
   rob.Ki = 20.0;
   rob.Kd = 5.0;
@@ -41,11 +42,17 @@ void loop()
   rob.computePIDOutput(sampleTime);
   rob.updateVelocities();
   rob.drive();
-  rob.getWaypoints().next();
-  Serial.print("xc ");
-  Serial.print(rob.getWaypoints().getCurrent().getX());
-  Serial.print("\t yc ");
-  Serial.println(rob.getWaypoints().getCurrent().getY());
+  //rob.getWaypoints().next();
+  if (displayCounter > 25 && displayOn)
+  {
+    displayCounter = 0;
+    Serial.print("xc ");
+    Serial.print(rob.waypoints.getCurrent().getX());
+    Serial.print("\t yc ");
+    Serial.println(rob.waypoints.getCurrent().getY());
+
+  }
+  displayCounter++;
 
 
   // --- Wait for next iteration ---

@@ -11,6 +11,8 @@
 #define PIN_A_OUTPUT_RIGHT_ENCODER 19
 #define PIN_B_OUTPUT_RIGHT_ENCODER 18
 
+#define motorDriverEnablingPin 4
+
 signed int leftMotorDirReference = -1, rightMotorDirReference = 1;
 
 
@@ -30,6 +32,10 @@ Robot::Robot() : leftMotor(PIN_MOTOR_L_DIR, PIN_MOTOR_L_PWM, leftMotorDirReferen
   sumError = 0.0;
   deltaError = 0.0;
   commandDelta = 0.0;
+
+  // We need to set that pin in high to enable the output of the motor driver
+  pinMode(motorDriverEnablingPin, OUTPUT);  
+  digitalWrite(motorDriverEnablingPin, HIGH);
 }
 
 void Robot::updatePoseEncoders()
@@ -72,7 +78,6 @@ void Robot::sensorFusion()
 void Robot::navigate()
 {
   float targetDistance = pose.distance(waypoints.getCurrent());
-  Serial.println(targetDistance);
   if (targetDistance < minDist)
   {
     waypoints.next();
@@ -81,8 +86,8 @@ void Robot::navigate()
 
 void Robot::computePIDOutput(float sampleTime) {
   float thetaDesired = atan2(waypoints.getCurrent().getY() - pose.getY(),
-                        waypoints.getCurrent().getX() - pose.getX());
-  thetaDesired = atan2(sin(thetaDesired), cos(thetaDesired));
+                             waypoints.getCurrent().getX() - pose.getX());
+  thetaDesired = atan2(sin(thetaDesired), cos(thetaDesired)); // send angle back to [-PI, PI]
 
   // Angle error
   float newAngleError = thetaDesired - pose.getTheta();

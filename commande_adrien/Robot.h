@@ -11,7 +11,6 @@ class Robot
 
   private:
     // Attributes
-    Waypoint waypoints;
     Motor leftMotor;
     Motor rightMotor;
     Encoder leftEncoder;
@@ -36,6 +35,7 @@ class Robot
     float Kp;  // P coefficient for the PID
     float Ki;  // I coefficient for the PID
     float Kd;  // D coefficient for the PID
+    Waypoint waypoints;
 
     // Methods
     Robot();
